@@ -25,3 +25,57 @@ void removerNo(arvore *no){
         free(no);
     }
 }
+
+void salvarArvore(arvore *salvar, FILE *pSalvar){
+
+    char *aux;
+
+    aux = (char*)malloc(4*(sizeof(char)));
+    sprintf(aux, "%d", salvar->indice);
+    fprintf(pSalvar, "%s", aux);
+    fprintf(pSalvar, "%c", ')');
+    fprintf(pSalvar, "%s", salvar->pergunta);
+    fprintf(pSalvar, "%c", '\n');
+
+    free(aux);
+
+    if(salvar->Sim != NULL){
+        salvarArvore(salvar->Sim, pSalvar);
+    }
+
+    if(salvar->Nao != NULL){
+        salvarArvore(salvar->Nao, pSalvar);
+    }
+}
+
+arvore *carregarArvore(FILE *pArquivo, arvore **salvar, arvore **pai, int indice, int direcao){
+
+    int indiceArquivo;
+    char *numero = (char*)malloc(4*(sizeof(char)));
+    char *pergunta = (char*)malloc(50*(sizeof(char)));
+    char *aux = (char*)malloc(2*(sizeof(char)));
+
+    rewind(pArquivo);                              //Volta pro inicio do Arquivo p/ recursividade
+
+    while(!feof(pArquivo)){
+        fscanf(pArquivo, "%4[^)])", numero);
+        indiceArquivo = atoi(numero);
+        if(indiceArquivo == indice){               //Avalia se chegou na pergunta certa
+            fscanf(pArquivo, "%50[^\n]\n", pergunta);
+            *salvar = preencherNo(pergunta, indice);
+            carregarArvore(pArquivo, &(*salvar)->Sim, salvar,(((*salvar)->indice)*2), 1);
+        }
+        else fscanf(pArquivo, "%50[^\n]\n", aux);
+    }
+
+    free(numero);
+    free(pergunta);
+    free(aux);
+
+    if(direcao == 1) {
+        carregarArvore(pArquivo, &(*pai)->Nao, pai,((((*pai)->indice)*2) + 1) , 0);
+    }
+
+    return *pai;
+
+}

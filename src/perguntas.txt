@@ -1,0 +1,4 @@
+1)E um animal?
+2)E um cachorro?
+4)E um beagle?
+9)E um poodle?
