@@ -22,7 +22,7 @@ int main(){
     arvore *raiz = (arvore *) malloc(sizeof(arvore));
     raiz->Sim = NULL;
     raiz->Nao = NULL;
-    raiz->indice = 1;
+    raiz->indice = 1;   //Primeiro nó é raiz
     arvore *salvar = NULL;
 
     printf(" *** Jogo das 20 Perguntas *** \n");
@@ -36,7 +36,7 @@ int main(){
         case 1: // Novo jogo
             printf("Digite sua pergunta inicial: \n");
             fgets(raiz->pergunta, 50, stdin);
-            strtok(raiz->pergunta, "\n");               //Retira o '\n' inserido ao final da string
+            strtok(raiz->pergunta, "\n");    //Retira o '\n' inserido ao final da string
             fprintf(pArquivo, "%d", raiz->indice);
             fprintf(pArquivo, ")");
             fprintf(pArquivo, "%s", raiz->pergunta);
@@ -45,8 +45,8 @@ int main(){
             break;
         case 2: //Carregar Jogo
             numero = malloc(4*(sizeof(char)));
-            fscanf(pArquivo, "%4[^)])", numero);
-            fscanf(pArquivo, "%50[^\n]\n", raiz->pergunta);
+            fscanf(pArquivo, "%4[^)])", numero);  //Le até o primeiro ')'
+            fscanf(pArquivo, "%50[^\n]\n", raiz->pergunta); //Le até o primeiro '\n'
             raiz->Sim = NULL;
             raiz->Nao = NULL;
             raiz->indice = atoi(numero);

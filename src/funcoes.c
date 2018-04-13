@@ -32,6 +32,8 @@ void salvarArvore(arvore *salvar, FILE *pSalvar){
 
     aux = (char*)malloc(4*(sizeof(char)));
     sprintf(aux, "%d", salvar->indice);
+
+  //Impressao padronizada no arquivo .txt, utilizando ')' e /n como separadores
     fprintf(pSalvar, "%s", aux);
     fprintf(pSalvar, "%c", ')');
     fprintf(pSalvar, "%s", salvar->pergunta);
@@ -39,13 +41,10 @@ void salvarArvore(arvore *salvar, FILE *pSalvar){
 
     free(aux);
 
-    if(salvar->Sim != NULL){
-        salvarArvore(salvar->Sim, pSalvar);
-    }
+    if(salvar->Sim != NULL)  salvarArvore(salvar->Sim, pSalvar);
 
-    if(salvar->Nao != NULL){
-        salvarArvore(salvar->Nao, pSalvar);
-    }
+    if(salvar->Nao != NULL)  salvarArvore(salvar->Nao, pSalvar);
+
 }
 
 arvore *carregarArvore(FILE *pArquivo, arvore **salvar, arvore **pai, int indice, int direcao){
@@ -55,13 +54,14 @@ arvore *carregarArvore(FILE *pArquivo, arvore **salvar, arvore **pai, int indice
     char *pergunta = (char*)malloc(50*(sizeof(char)));
     char *aux = (char*)malloc(2*(sizeof(char)));
 
-    rewind(pArquivo);                              //Volta pro inicio do Arquivo p/ recursividade
+    rewind(pArquivo);        //Volta pro inicio do Arquivo p/ recursividade
 
     while(!feof(pArquivo)){
 
         fscanf(pArquivo, "%4[^)])", numero);
+        //Conversao para inteiro para comparacao correta no if()
         indiceArquivo = atoi(numero);
-        if(indiceArquivo == indice){               //Avalia se chegou na pergunta certa
+        if(indiceArquivo == indice){     //Avalia se chegou na pergunta certa
             fscanf(pArquivo, "%50[^\n]\n", pergunta);
             *salvar = preencherNo(pergunta, indice);
             carregarArvore(pArquivo, &(*salvar)->Sim, salvar,(((*salvar)->indice)*2), 1);
@@ -75,6 +75,7 @@ arvore *carregarArvore(FILE *pArquivo, arvore **salvar, arvore **pai, int indice
     free(aux);
 
     if(direcao == 1) {
+      //Muda a direcao para a checagem no outro lado da arvore
         carregarArvore(pArquivo, &(*pai)->Nao, pai,((((*pai)->indice)*2) + 1) , 0);
     }
 
@@ -92,6 +93,7 @@ arvore *percorrer(int resp, arvore **raiz){
                 printf("Insira nova pergunta : ");
                 fgets(pergunta, 50, stdin);
                 strtok(pergunta, "\n");
+    //Preenche o no seguinte baseado na resposta, com a pergunta inserida
                 (*raiz)->Sim = preencherNo(pergunta, (((*raiz)->indice) * 2));
                 return (*raiz)->Sim;
             }
@@ -123,7 +125,7 @@ void novoJogo(arvore **raiz, FILE *pSalvar){
     int resp, respAux, indiceAux, quantidadePerguntas=0;
     arvore *salvar = *raiz;
     do{
-        quantidadePerguntas++;
+        quantidadePerguntas++;               //Var. auxiliar para contagem de 20 perguntas
         printf("Pergunta : %s\n", (*raiz)->pergunta);
         printf("Resposta : \n0 - Sim \n1 - Nao\n7 - Acertou!!\n8 - Remover pergunta\n9 - Sair \n");
         scanf("%d", &resp);
