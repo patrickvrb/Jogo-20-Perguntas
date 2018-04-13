@@ -1,15 +1,25 @@
-//
-//  jogo20perguntas.c
-//  Jogo 20 Perguntas
-//
-//  Created by Patrick Beal on 27/03/2018.
-//  Copyright © 2018 Patrick Beal. All rights reserved.
-//
+/*
+*  jogo20perguntas.c
+*  Jogo 20 Perguntas
+*
+*  Created by Patrick Beal on 27/03/2018.
+*  Copyright © 2018 Patrick Beal. All rights reserved.
+*
+*/
 
+/**@brief Header para funcionamento completo do programa.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <headers.h>
+
+/**@brief Main do jogo.
+*
+*A main realiza a filtragem inicial para a escolha do usuario.
+*Baseada em input, ela decide por meio de switch case qual caminho
+*seguir, executando as funcoes de 'funcoes.c' para execucao do jogo.
+*/
 
 int main(){
 
@@ -63,12 +73,10 @@ int main(){
         default:
             printf("Opção Inválida!!\n");
             removerNo(raiz);
-            removerNo(salvar);
             return 0;
     }
 
     removerNo(raiz);
-    removerNo(salvar);
     fclose(pArquivo);
     printf("Até a próxima!!!\n");
     return 0;

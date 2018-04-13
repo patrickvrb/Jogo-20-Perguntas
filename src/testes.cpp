@@ -2,6 +2,9 @@
 #include "catch.hpp"
 #include "headers.h"
 
+/**@brief Teste para verificar nao quebra do programa
+* Ao tentar desalocar um nó ja nulo, o programa segue normalmente.
+*/
 
 TEST_CASE ("Remover no ja nulo", "Nao gera erros de memoria")
 {
@@ -9,7 +12,10 @@ TEST_CASE ("Remover no ja nulo", "Nao gera erros de memoria")
   removerNo(no);
   REQUIRE(no == NULL);
 }
-/* Teste parar verificar a correta funcionalidade da funcao preencherNo*/
+/**@brief Teste parar verificar a correta funcionalidade da funcao preencherNo.
+* O teste realiza a chamada da funcao preencherNo com parametros criados,
+*retornando seu valor em uma variavel do tipo arvore.
+*/
 
 TEST_CASE( "No != NULL", "Assegurar alocacao e preenchimento do no" ){
 
@@ -25,7 +31,9 @@ TEST_CASE( "No != NULL", "Assegurar alocacao e preenchimento do no" ){
     REQUIRE(no->indice == indice);
 }
 
-/* Teste parar verificar a correta funcionalidade da funcao carregarArvore*/
+/**@brief Teste parar verificar a correta funcionalidade da funcao carregarArvore.
+*
+*/
 TEST_CASE("Carregamento"," Assegurar carregamento de arvore em memoria"){
 
   FILE *pArquivo;

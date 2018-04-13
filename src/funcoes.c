@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+/**@brief Função de Criação do No padrao da arvore.
+*/
 typedef struct no{
     char pergunta[50];
     int indice;
@@ -9,6 +11,8 @@ typedef struct no{
     struct no *Nao;             //Nó Direita
 } arvore;
 
+/**@brief Funcao para criar um no novo e preenchido, baseado nos parametros.
+*/
 arvore *preencherNo(char *pergunta, int indice){
     arvore *no = (arvore*)malloc(sizeof(arvore));
     strcpy(no->pergunta, pergunta);
@@ -18,6 +22,8 @@ arvore *preencherNo(char *pergunta, int indice){
     return no;
 }
 
+/**@brief Funcao remover o no atual.
+*/
 void removerNo(arvore *no){
     if(no!=0){
         removerNo(no->Sim);
@@ -26,6 +32,8 @@ void removerNo(arvore *no){
     }
 }
 
+/**@brief Funcao para salvar a arvore em um arquivo .txt.
+*/
 void salvarArvore(arvore *salvar, FILE *pSalvar){
 
     char *aux;
@@ -47,6 +55,8 @@ void salvarArvore(arvore *salvar, FILE *pSalvar){
 
 }
 
+/**@brief Funcao para carregar a arvore de um arquivo .txt para a memoria.
+*/
 arvore *carregarArvore(FILE *pArquivo, arvore **salvar, arvore **pai, int indice, int direcao){
 
     int indiceArquivo;
@@ -83,6 +93,10 @@ arvore *carregarArvore(FILE *pArquivo, arvore **salvar, arvore **pai, int indice
 
 }
 
+/**@brief Funcao para percorrer a arvore.
+*É checada a existencia previa de nos, criando-os caso nao
+*existam.
+*/
 arvore *percorrer(int resp, arvore **raiz){
 
     char pergunta[50];
@@ -120,6 +134,10 @@ arvore *percorrer(int resp, arvore **raiz){
     return 0;
 }
 
+/**@brief Funcao para executar o jogo.
+*Utilizando das funcoes anteriores, com lacos
+*de repeticao e condicoes de parada relativas ao input do usuario.
+*/
 void novoJogo(arvore **raiz, FILE *pSalvar){
 
     int resp, respAux, indiceAux, quantidadePerguntas=0;
@@ -130,7 +148,7 @@ void novoJogo(arvore **raiz, FILE *pSalvar){
         printf("Resposta : \n0 - Sim \n1 - Nao\n7 - Acertou!!\n8 - Remover pergunta\n9 - Sair \n");
         scanf("%d", &resp);
         getchar();
-        if(resp == 8){
+        if(resp == 8){  //Remocao da pergunta
             indiceAux = (*raiz)->indice;
             removerNo(*raiz);
             printf("Pergunta removida com sucesso!\n");
