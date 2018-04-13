@@ -2,21 +2,21 @@
 //  jogo20perguntas.c
 //  Jogo 20 Perguntas
 //
-//  Created by Patrick Beal.
+//  Created by Patrick Beal on 27/03/2018.
 //  Copyright © 2018 Patrick Beal. All rights reserved.
 //
 
-#include <headers.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <headers.h>
 
 int main(){
 
     FILE *pArquivo;
-
     int opcao =0;
     char *numero;
+
     pArquivo = fopen("perguntas.txt", "r+");
 
     arvore *raiz = (arvore *) malloc(sizeof(arvore));
@@ -40,9 +40,9 @@ int main(){
             fprintf(pArquivo, "%d", raiz->indice);
             fprintf(pArquivo, ")");
             fprintf(pArquivo, "%s", raiz->pergunta);
+            novoJogo(&raiz,pArquivo);
             printf("\nFim de jogo!\n");
             break;
-
         case 2: //Carregar Jogo
             numero = malloc(4*(sizeof(char)));
             fscanf(pArquivo, "%4[^)])", numero);
@@ -53,6 +53,7 @@ int main(){
             free(numero);
             salvar = carregarArvore(pArquivo, &raiz->Sim, &raiz, 2, 1);
             printf("\nCarregando dados passados......\nFeito!\n");
+            novoJogo(&salvar, pArquivo);
             printf("\nFim de jogo!\n");
             break;
 
