@@ -19,6 +19,7 @@
 *A main realiza a filtragem inicial para a escolha do usuario.
 *Baseada em input, ela decide por meio de switch case qual caminho
 *seguir, executando as funcoes de 'funcoes.c' para execucao do jogo.
+*
 */
 
 int main(){
@@ -30,6 +31,8 @@ int main(){
     pArquivo = fopen("perguntas.txt", "r+");
 
     arvore *raiz = (arvore *) malloc(sizeof(arvore));
+    if(raiz == NULL) printf("Falha ao alocar memória!! \n");
+
     raiz->Sim = NULL;
     raiz->Nao = NULL;
     raiz->indice = 1;   //Primeiro nó é raiz

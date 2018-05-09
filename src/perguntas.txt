@@ -1,6 +1,5 @@
 1)E um animal?
 2)E um cachorro?
 4)E um beagle?
-9)E um poodle?
 5)E um passaro?
-10)E uma calopsita?
+10)É uma calopsita?
