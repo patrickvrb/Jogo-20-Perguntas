@@ -3,3 +3,7 @@
 4)E um beagle?
 5)E um passaro?
 10)É uma calopsita?
+11)E um gato?
+3)É uma pessoa?
+6)É um ator famoso?
+12)É o James Bond?

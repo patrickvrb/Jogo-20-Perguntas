@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 /**@brief Estrutura de criação do No padrao da arvore.
 *A estrutura possui um campo para o texto (pergunta) de tamanho 50,
@@ -19,6 +20,8 @@ typedef struct no{
 *a ser colocado no novo nó da árvore, que é alocado também nessa função
 */
 arvore *preencherNo(char *pergunta, int indice){
+    assert(pergunta != NULL);
+    assert(indice >= 0);
     arvore *no = (arvore*)malloc(sizeof(arvore));
     if(no == NULL) printf("Falha ao alocar memória!! \n");
     strcpy(no->pergunta, pergunta);
@@ -29,7 +32,7 @@ arvore *preencherNo(char *pergunta, int indice){
 }
 
 /**@brief Funcao remover o no atual.
-*A função desaloca recursivamente a árvore contida abaixo até o nó recebido 
+*A função desaloca recursivamente a árvore contida abaixo até o nó recebido
 *como parâmetro, realizando uma checagem inicial de sua existência
 */
 void removerNo(arvore *no){
@@ -44,7 +47,7 @@ void removerNo(arvore *no){
 * A função recebe como parâmetros o ponteiro da arvore a ser
 *salvada, bem como o ponteiro do arquivo qual será utilizado
 *para isso.
-* Para salvar, é utilizado a função fprintf com os dados lidos 
+* Para salvar, é utilizado a função fprintf com os dados lidos
 *da árvore, na forma INDICE ) PERGUNTA \n
 * Ao final, é realizada a checagem de ambos ponteiros do nó atual,
 *para realizar a chamada recursiva da função e salvar a árvore na ordem
@@ -52,6 +55,8 @@ void removerNo(arvore *no){
 */
 void salvarArvore(arvore *salvar, FILE *pSalvar){
 
+    assert(salvar != NULL);
+    assert(pSalvar != NULL);
     char *aux;
 
     aux = (char*)malloc(4*(sizeof(char)));
@@ -129,7 +134,7 @@ arvore *carregarArvore(FILE *pArquivo, arvore **salvar, arvore **pai, int indice
 /**@brief Função para percorrer a arvore.
 *É checada a existência previa de nos, criando-os caso não
 *existam.
-* A função recebe como parâmetro a resposta dada pelo usuário ( 0 - Sim e 1 - Não ), 
+* A função recebe como parâmetro a resposta dada pelo usuário ( 0 - Sim e 1 - Não ),
 *utilizando de switch case para inserir novas perguntas (urilizando a função preencherNo),
 *se não houver nós filhos, ou trocar a referência para o nó filho,
 *returnando o nó atual em ambos os casos
@@ -165,6 +170,9 @@ arvore *percorrer(int resp, arvore **raiz){
                 return (*raiz)->Nao;
 
             break;
+        default:
+            printf("Resposta inválida!\n");
+            break;
 
     }
     return 0;
@@ -174,7 +182,7 @@ arvore *percorrer(int resp, arvore **raiz){
 /**@brief Funcao para executar o jogo.
 *Utilizando das funções anteriores, com laços
 *de repetição e condições de parada relativas ao input do usuario.
-* A função recebe como parâmetro uma referência ao ponteiro inicial da 
+* A função recebe como parâmetro uma referência ao ponteiro inicial da
 *árvore, bem como o ponteiro do arquivo para poder salvar o jogo.
 * Salvada a referência inicial em uma variável tipo arvore, a função
 *realiza um loop (incrementando a quantidade de perguntas) imprimindo as
@@ -185,6 +193,8 @@ arvore *percorrer(int resp, arvore **raiz){
 */
 void novoJogo(arvore **raiz, FILE *pSalvar){
 
+    assert(*raiz!=NULL);
+    assert(pSalvar!=NULL);
     int resp, respAux, indiceAux, quantidadePerguntas=0;
     arvore *salvar = *raiz;
     do{
